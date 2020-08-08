@@ -1,7 +1,7 @@
 # dell-ansible-playbook
-Configuration a Dell-EMC OS9 Networking device (S-4048) with Ansible playbooks
+Configuration a Dell OS9 Networking device (Dell Switch S4048-ON) with Ansible playbooks.
 
-Read a full article of this repo:
+Read a full article of this repo: https://gainanov.pro/eng-blog/devops/dell-ansible-playbook
 
 ## Prerequisite
 
