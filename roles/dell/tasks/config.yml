@@ -1,0 +1,22 @@
+# https://docs.ansible.com/ansible/latest/modules/dellos9_config_module.html#dellos9-config-module
+
+- name: "Enable interface and dhcp client on port te1/1"
+  dellos9_config:
+    lines:
+      - 'no ip address'
+      - 'shutdown'
+      # - 'ip address dhcp'
+      # - 'no shutdown'
+    parents:
+      - 'interface TenGigabitEthernet 1/1'
+  register: enable_interface
+- debug: var=enable_interface
+
+- name: "Copy running-config to startup-config for the Dell EMC OS9 Device"
+  dellos9_config:
+    lines:
+      - command: do copy running-config startup-config
+        prompt: '\[confirm yes/no\]:\s?$'
+        answer: "yes"
+  # register: handle_prompt
+# - debug: var=handle_prompt

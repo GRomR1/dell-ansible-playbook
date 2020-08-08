@@ -1,0 +1,9 @@
+
+- name: Run gather facts tasks
+  include_tasks: facts.yml
+
+- name: Run command tasks
+  include_tasks: command.yml
+
+- name: Run config tasks
+  include_tasks: config.yml

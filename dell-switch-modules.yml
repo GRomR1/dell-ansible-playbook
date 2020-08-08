@@ -1,0 +1,15 @@
+---
+# Work with basic modules for dellos9 devices
+# https://docs.ansible.com/ansible/latest/modules/list_of_network_modules.html#dellos9
+#
+# ansible-playbook dell-switch-modules.yml --step
+
+- hosts:
+    - switch10g_new
+  gather_facts: no
+  # become: yes
+  # become_method: enable
+  connection: local
+  # connection: network_cli
+  roles:
+    - role: dell

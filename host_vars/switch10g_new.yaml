@@ -1,0 +1,54 @@
+
+# https://galaxy.ansible.com/Dell-Networking/dellos-system
+dellos_system:
+  hostname: "{{ inventory_host }}"
+
+# https://galaxy.ansible.com/Dell-Networking/dellos-interface
+dellos_interface:
+    # interface TenGigabitEthernet 1/22
+    #   description T-GPU1
+    #   no ip address
+    #   portmode hybrid
+    #   switchport
+    #   no shutdown
+    TenGigabitEthernet 1/22:
+      desc: "T-GPU1"
+      ip_and_mask:  # set up `no ip address`
+      portmode: hybrid  # pass both untagged and tagged VLANs
+      switchport: true
+      # ip_type_dynamic: true # Configures IP address DHCP if set to true (ip_and_mask is ignored if set to true)
+      # ip_and_mask: 192.168.23.22/24 # Configures the specified IP address (192.168.11.1/24 format)
+      admin: up  # enables the interface
+
+    # interface Port-channel 1
+    #   no ip address
+    #   switchport
+    #   no shutdown
+    port-channel 1:
+      ip_and_mask:
+      switchport: true
+      admin: up
+
+    # interface Vlan 3
+    #  description C-DATA
+    #  no ip address
+    #  tagged Port-channel 1
+    #  untagged TenGigabitEthernet 1/22
+    #  no shutdown
+    vlan 3:
+      desc: "C-DATA"
+      ip_and_mask:
+      # to configure vlan use dellos-vlan role (see next)
+      admin: up
+
+# https://galaxy.ansible.com/Dell-Networking/dellos-vlan
+dellos_vlan:
+    vlan 3:
+      description: "C-DATA"
+      tagged_members:
+        - port: "Port-channel 1"
+          state: present
+      untagged_members:
+        - port: "TenGigabitEthernet 1/22"
+          state: present
+      state: present

@@ -1,0 +1,18 @@
+# https://docs.ansible.com/ansible/latest/modules/dellos9_command_module.html#dellos9-command-module
+
+- name: Detect a device version
+  dellos9_command:
+    commands: show version
+  register: show_ver
+
+- name: Show version command output
+  debug:
+    var:  show_ver.stdout_lines
+
+
+- name: Get device clock
+  dellos9_command:
+    commands:
+      - show clock
+  register: show_clock
+- debug: var=show_clock.stdout

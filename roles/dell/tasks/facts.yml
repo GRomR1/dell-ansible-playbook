@@ -1,0 +1,26 @@
+# https://docs.ansible.com/ansible/latest/modules/dellos9_facts_module.html#dellos9-facts-module
+
+- name: Collect all facts from the device
+  dellos9_facts:
+    # all, hardware, config, and interfaces
+    # '!' to specify that a specific subset should not be collected.
+    # gather_subset: ["all"]
+    # gather_subset: ["config", "hardware"]
+    gather_subset: ["all", "!interfaces"]
+  register: dellos9_facts
+
+- name: Show dellos9_facts
+  debug:
+    var: dellos9_facts
+
+- name: Show the current active config from the device
+  debug:
+    var: dellos9_facts['ansible_facts']['ansible_net_config']
+
+- name: Save an active config from the device to localhost
+  vars:
+    running_config: "{{ dellos9_facts['ansible_facts']['ansible_net_config'] }}"
+  local_action:
+    module: copy
+    content: "{{ running_config }}"
+    dest: "files/running_config_{{ inventory_hostname }}"

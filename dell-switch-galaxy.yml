@@ -1,0 +1,32 @@
+---
+# Work with Ansible Galaxy roles:
+# https://galaxy.ansible.com/Dell-Networking/dellos-interface
+# https://galaxy.ansible.com/Dell-Networking/dellos-vlan
+# https://galaxy.ansible.com/Dell-Networking/dellos-system
+#
+# ansible-playbook dell-switch-galaxy.yml --step
+
+- hosts:
+    - switch10g_new
+  gather_facts: no
+  # become: yes
+  # become_method: enable
+  connection: local
+  # connection: network_cli
+
+  roles:
+    - role: ansible-roles/Dell-Networking.dellos-system
+    - role: ansible-roles/Dell-Networking.dellos-interface
+    - role: ansible-roles/Dell-Networking.dellos-vlan
+
+  tasks:
+    - name: Collect interfaces facts from the device
+      dellos9_facts:
+        gather_subset: ["interfaces"]
+      register: dellos9_facts_interfaces
+    - name: Show modified interfaces
+      vars:
+        interfaces:
+          'TenGigabitEthernet 1/22': "{{ dellos9_facts_interfaces['ansible_facts']['ansible_net_interfaces']['TenGigabitEthernet 1/22'] }}"
+          'Vlan 3': "{{ dellos9_facts_interfaces['ansible_facts']['ansible_net_interfaces']['Vlan 3'] }}"
+      debug: var=interfaces
