@@ -17,8 +17,8 @@ Read a full article of this repo:
 
 ## Playbooks
 
-1. [`dell-switch-modules`][./dell-switch-modules.yml] - examples with basic `dellos9` modules
-2. [`dell-switch-galaxy`][./dell-switch-galaxy.yml] - examples of running Galaxy roles
+1. [`dell-switch-modules`](./dell-switch-modules.yml) - examples with basic `dellos9` modules
+2. [`dell-switch-galaxy`](./dell-switch-galaxy.yml) - examples of running Galaxy roles
 
 ## Links
 * https://github.com/Dell-Networking/ansible-dellos-examples
